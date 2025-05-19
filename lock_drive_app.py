@@ -8,12 +8,19 @@ FOLDER_PATH = r"D:\MyPrivateStuff"
 PASSWORD_FILE = "password.txt"
 
 # === FUNCTIONS ===
+def hide_file(filepath):
+    try:
+        subprocess.run(["attrib", "+h", filepath], check=True)
+    except Exception as e:
+        print(f"Failed to hide {filepath}: {e}"
+
 def hash_password(password):
     return hashlib.sha256(password.encode()).hexdigest()
 
 def save_password(password):
     with open(PASSWORD_FILE, "w") as f:
         f.write(hash_password(password))
+    hide_file(PASSWORD_FILE)
 
 def load_password():
     with open(PASSWORD_FILE, "r") as f:
